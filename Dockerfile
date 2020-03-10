@@ -8,6 +8,10 @@ USER root
 ENV APACHE_SPARK_VERSION 2.1.0
 ENV HADOOP_VERSION 2.7
 
+# Quick fix from SO : https://stackoverflow.com/questions/32942023/ubuntu-openjdk-8-unable-to-locate-package
+# for openjdk-8-jdk
+RUN add-apt-repository ppa:openjdk-r/ppa && apt-get update
+
 # Install system libraries required by R packages
 RUN apt-get -y update  && apt-get install -y libcups2 libcups2-dev openjdk-8-jdk systemd \
     unixodbc-dev libbz2-dev libgsl-dev odbcinst libx11-dev mesa-common-dev libglu1-mesa-dev \
