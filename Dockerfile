@@ -5,15 +5,19 @@ USER root
 # some comment for autobuild t2
 
 # Spark dependencies versions
-ENV APACHE_SPARK_VERSION 2.1.0
-ENV HADOOP_VERSION 2.7
+# ENV APACHE_SPARK_VERSION 2.1.0
+# ENV HADOOP_VERSION 2.7
 
 # Quick fix from SO : https://stackoverflow.com/questions/32942023/ubuntu-openjdk-8-unable-to-locate-package
 # for openjdk-8-jdk
-RUN add-apt-repository ppa:openjdk-r/ppa && apt-get update
+# RUN add-apt-repository ppa:openjdk-r/ppa
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+# RUN apt-get -y install python-software-properties
+RUN apt-get -y install --fix-missing software-properties-common
+# RUN add-apt-repository ppa:webupd8team/java && apt-get install -y oracle-java8-installer
 
-# Install system libraries required by R packages
-RUN apt-get -y update  && apt-get install -y libcups2 libcups2-dev openjdk-8-jdk systemd \
+# Install system libraries required by R packages # openjdk-8-jdk before systemd
+RUN apt-get -y update  && apt-get install -y libcups2 libcups2-dev systemd \
     unixodbc-dev libbz2-dev libgsl-dev odbcinst libx11-dev mesa-common-dev libglu1-mesa-dev \
     gdal-bin proj-bin libgdal-dev libproj-dev libudunits2-dev libtcl8.6 libtk8.6 libgtk2.0-dev && \
     apt-get clean
@@ -25,32 +29,32 @@ RUN cd /tmp && \
     odbcinst -i -d -f /opt/cloudera/impalaodbc/Setup/odbcinst.ini
 
 # Install Spark
-RUN cd /tmp && \
-    wget -q https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
-    tar xzf spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz -C /usr/local && \
-    rm spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
+# RUN cd /tmp && \
+#     wget -q https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
+#     tar xzf spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz -C /usr/local && \
+#     rm spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
 
-RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark
+# RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark
 
 # Mesos dependencies
-RUN DISTRO=debian && \
-    CODENAME=stretch && \
-    echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main" > /etc/apt/sources.list.d/mesosphere.list && \
-    apt-get -y update && \
-    apt-get --no-install-recommends -y --force-yes install mesos=1.3.1-2.0.1 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# RUN DISTRO=debian && \
+#     CODENAME=stretch && \
+#     echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main" > /etc/apt/sources.list.d/mesosphere.list && \
+#     apt-get -y update && \
+#     apt-get --no-install-recommends -y --force-yes install mesos=1.3.1-2.0.1 && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
 
-# Spark and Mesos config
-ENV SPARK_HOME /usr/local/spark
-ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
-ENV SPARK_OPTS --driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info
+# # Spark and Mesos config
+# ENV SPARK_HOME /usr/local/spark
+# ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
+# ENV SPARK_OPTS --driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info
 
-RUN R -e "install.packages('sparklyr', repos='http://cran.rstudio.com/', dependencies=T)"
+# RUN R -e "install.packages('sparklyr', repos='http://cran.rstudio.com/', dependencies=T)"
 
-# Install Saagie's RStudio Addin
-RUN R -e "install.packages('devtools')" && \
-  R -e "devtools::install_github('saagie/rstudio-saagie-addin')"
+# # Install Saagie's RStudio Addin
+# RUN R -e "install.packages('devtools')" && \
+#   R -e "devtools::install_github('saagie/rstudio-saagie-addin')"
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
