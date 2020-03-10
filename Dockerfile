@@ -15,6 +15,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 # RUN apt-get -y install python-software-properties
 RUN apt-get -y install --fix-missing software-properties-common
 # RUN add-apt-repository ppa:webupd8team/java && apt-get install -y oracle-java8-installer
+# RUN apt-get install -y openjdk-8-jdk
+
+# curtesy of https://github.com/gadenbuie/docker-tidyverse-rjava/blob/master/Dockerfile
+RUN apt-get -y update && apt-get install -y \
+   default-jdk \
+   r-cran-rjava \
+   && apt-get clean \
+   && rm -rf /var/lib/apt/lists/
 
 # Install system libraries required by R packages # openjdk-8-jdk before systemd
 RUN apt-get -y update  && apt-get install -y libcups2 libcups2-dev systemd \
@@ -60,71 +68,24 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 # Install R packages
 RUN R CMD javareconf && R -e "install.packages('rJava')" && \
+R -e "install.packages('DBI')" && \
  R -e "install.packages('odbc')" && \
- R -e "install.packages('RJDBC')" && \
- R -e "install.packages('implyr')" && \
- R -e "install.packages('futile.logger')" && \
  R -e "install.packages('h2o')" && \
- R -e "install.packages('caret')" && \
- R -e "install.packages('ROSE')" && \
- R -e "install.packages('caretEnsemble')" && \
- R -e "install.packages('randomForest')" && \
- R -e "install.packages('pROC')" && \
- R -e "install.packages('rsparkling')" && \
- R -e "install.packages('xts')" && \
- R -e "install.packages('dygraphs')" && \
- R -e "install.packages('forecast')" && \
- R -e "install.packages('mclust')" && \
- R -e "install.packages('factoextra')" && \
- R -e "install.packages('dbscan')" && \
- R -e "install.packages('dtw')" && \
  R -e "install.packages('ROCR')" && \
- R -e "install.packages('Rtsne')" && \
  R -e "install.packages('corrplot')" && \
  R -e "install.packages('dummies')" && \
  R -e "install.packages('xgboost')" && \
- R -e "install.packages('e1071')" && \
- R -e "install.packages('DescTools')" && \
- R -e "install.packages('packrat')" && \
- R -e "install.packages('tm')" && \
- R -e "install.packages('RTextTools')" && \
- R -e "install.packages('networkD3')" && \
- R -e "install.packages('sqldf')" && \
- R -e "install.packages('syuzhet')" && \
- R -e "install.packages('TSclust')" && \
- R -e "install.packages('arules')" && \
- R -e "install.packages('arulesSequences')" && \
- R -e "install.packages('recommenderlab')" && \
- R -e "install.packages('AUC')" && \
- R -e "install.packages('kohonen')" && \
- R -e "install.packages('topicmodels')" && \
- R -e "install.packages('argparse')" && \
- R -e "install.packages('lsa')" && \
- R -e "install.packages('d3heatmap')" && \
- R -e "install.packages('pvclust')" && \
- R -e "install.packages('trend')" && \
- R -e "install.packages('breakpoint')" && \
- R -e "install.packages('changepoint')" && \
- R -e "install.packages('mvoutlier')" && \
- R -e "install.packages('shinydashboard')" && \
- R -e "install.packages('FNN')" && \
  R -e "install.packages('plotly')" && \
- R -e "install.packages('RMySQL')" && \
- R -e "install.packages('DescTools')" && \
  R -e "install.packages('doParallel')" && \
- R -e "install.packages('ff')" && \
- R -e "install.packages('ffbase')" && \
  R -e "install.packages('jsonlite')" && \
  R -e "install.packages('forecast')" && \
  R -e "install.packages('tseries')" && \
  R -e "install.packages('trend')" && \
  R -e "install.packages('rvest')" && \
  R -e "install.packages('curl')" && \
- R -e "install.packages('RSelenium')" && \
  R -e "install.packages('Rcpp')" && \
  R -e "install.packages('ggplot2')" && \
  R -e "install.packages('rpart.plot')" && \
- R -e "install.packages('labeling')" && \
  R -e "install.packages('reshape2')" && \
  R -e "install.packages('shiny')" && \
  R -e "install.packages('markdown')" && \
@@ -136,28 +97,13 @@ RUN R CMD javareconf && R -e "install.packages('rJava')" && \
  R -e "install.packages('stringr')" && \
  R -e "install.packages('data.table')" && \
  R -e "install.packages('xlsx')" && \
- R -e "install.packages('sas7bdat')" && \
  R -e "install.packages('readxl')" && \
  R -e "install.packages('readr')" && \
- R -e "install.packages('rjson')" && \
  R -e "install.packages('leaflet')" && \
  R -e "install.packages('RColorBrewer')" && \
- R -e "install.packages('classInt')" && \
- R -e "install.packages('maptools')" && \
- R -e "install.packages('colorspace')" && \
  R -e "install.packages('colourpicker')" && \
- R -e "install.packages('mapproj')" && \
- R -e "install.packages('maps')" && \
  R -e "install.packages('scales')" && \
- R -e "install.packages('sp')" && \
  R -e "install.packages('FactoMineR')" && \
- R -e "install.packages('FactoInvestigate')" && \
- R -e "install.packages('missMDA')" && \
- R -e "install.packages('RcmdrMisc')" && \
- R -e "install.packages('ade4')" && \
- R -e "install.packages('RTextTools')" && \
- R -e "install.packages('tree')" && \
- R -e "install.packages('kknn')" && \
  R -e "install.packages('kernlab')" && \
  R -e "install.packages('rpart')" && \
  R -e "install.packages('e1071')" && \
@@ -169,23 +115,10 @@ RUN R CMD javareconf && R -e "install.packages('rJava')" && \
  R -e "install.packages('mlogit')" && \
  R -e "install.packages('pROC')" && \
  R -e "install.packages('caret')" && \
- R -e "install.packages('wordcloud')" && \
  R -e "install.packages('stringi')" && \
  R -e "install.packages('SnowballC')" && \
- R -e "install.packages('RWeka')" && \
- R -e "install.packages('hunspell')" && \
- R -e "install.packages('topicmodels')" && \
- R -e "install.packages('magrittr')" && \
- R -e "install.packages('cluster')" && \
- R -e "install.packages('proxy')" && \
- R -e "install.packages('skmeans')" && \
- R -e "install.packages('LDAvis')" && \
- R -e "install.packages('lsa')" && \
- R -e "install.packages('doSNOW')" && \
- R -e "install.packages('cartography')" && \
- R -e "install.packages('Factoshiny')" && \
- R -e "install.packages('cairoDevice', INSTALL_opts='--no-test-load')" && \
- R -e "install.packages('rattle')"
+ R -e "install.packages('magrittr')"
+ R -e "install.packages('doSNOW')"
 
 RUN mkdir /root/.R/
 RUN echo CXXFLAGS=-DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION > /root/.R/Makevars
