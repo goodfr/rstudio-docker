@@ -120,9 +120,12 @@ R -e "install.packages('DBI')" && \
  R -e "install.packages('magrittr')" && \
  R -e "install.packages('doSNOW')"
 
+RUN R -e "install.packages('prophet')"
+ 
+RUN R -e "install.packages('getPass')"
+
 RUN mkdir /root/.R/
 RUN echo CXXFLAGS=-DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION > /root/.R/Makevars
-RUN R -e "install.packages('prophet')"
 
 # Be sure rstudio user has full access to his home directory
 RUN mkdir -p /home/rstudio && \
@@ -150,8 +153,6 @@ RUN wget --no-verbose http://apache.mirrors.ovh.net/ftp.apache.org/dist/hive/hiv
 && cd apache-hive-1.2.2-bin
 ENV HIVE_HOME=/apache-hive-1.2.2-bin
 ENV PATH=$HIVE_HOME/bin:$PATH
-
-RUN R -e "install.packages('getPass')"
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -qq && apt-get install -yqq --no-install-recommends \
