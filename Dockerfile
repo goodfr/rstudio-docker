@@ -117,7 +117,7 @@ R -e "install.packages('DBI')" && \
  R -e "install.packages('caret')" && \
  R -e "install.packages('stringi')" && \
  R -e "install.packages('SnowballC')" && \
- R -e "install.packages('magrittr')"
+ R -e "install.packages('magrittr')" && \
  R -e "install.packages('doSNOW')"
 
 RUN mkdir /root/.R/
