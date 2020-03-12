@@ -31,10 +31,10 @@ RUN apt-get -y update  && apt-get install -y libcups2 libcups2-dev systemd \
     apt-get clean
 
 # Install Impala ODBC dependency
-RUN cd /tmp && \
-    wget --no-verbose https://downloads.cloudera.com/connectors/impala_odbc_2.5.41.1029/Debian/clouderaimpalaodbc_2.5.41.1029-2_amd64.deb && \
-    dpkg -i clouderaimpalaodbc_2.5.41.1029-2_amd64.deb && \
-    odbcinst -i -d -f /opt/cloudera/impalaodbc/Setup/odbcinst.ini
+# RUN cd /tmp && \
+#     wget --no-verbose https://downloads.cloudera.com/connectors/impala_odbc_2.5.41.1029/Debian/clouderaimpalaodbc_2.5.41.1029-2_amd64.deb && \
+#     dpkg -i clouderaimpalaodbc_2.5.41.1029-2_amd64.deb && \
+#     odbcinst -i -d -f /opt/cloudera/impalaodbc/Setup/odbcinst.ini
 
 # Install Spark
 # RUN cd /tmp && \
@@ -67,62 +67,60 @@ RUN cd /tmp && \
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 # Install R packages
-RUN R CMD javareconf && R -e "install.packages('rJava')" && \
-R -e "install.packages('DBI')" && \
- R -e "install.packages('odbc')" && \
- R -e "install.packages('h2o')" && \
- R -e "install.packages('ROCR')" && \
- R -e "install.packages('corrplot')" && \
- R -e "install.packages('dummies')" && \
- R -e "install.packages('xgboost')" && \
- R -e "install.packages('plotly')" && \
- R -e "install.packages('doParallel')" && \
- R -e "install.packages('jsonlite')" && \
- R -e "install.packages('forecast')" && \
- R -e "install.packages('tseries')" && \
- R -e "install.packages('trend')" && \
- R -e "install.packages('rvest')" && \
- R -e "install.packages('curl')" && \
- R -e "install.packages('Rcpp')" && \
- R -e "install.packages('ggplot2')" && \
- R -e "install.packages('rpart.plot')" && \
- R -e "install.packages('reshape2')" && \
- R -e "install.packages('shiny')" && \
- R -e "install.packages('markdown')" && \
- R -e "install.packages('shinydashboard')" && \
- R -e "install.packages('knitr')" && \
- R -e "install.packages('shinyjs')" && \
- R -e "install.packages('shinythemes')" && \
- R -e "install.packages('dtplyr')" && \
- R -e "install.packages('stringr')" && \
- R -e "install.packages('data.table')" && \
- R -e "install.packages('xlsx')" && \
- R -e "install.packages('readxl')" && \
- R -e "install.packages('readr')" && \
- R -e "install.packages('leaflet')" && \
- R -e "install.packages('RColorBrewer')" && \
- R -e "install.packages('colourpicker')" && \
- R -e "install.packages('scales')" && \
- R -e "install.packages('FactoMineR')" && \
- R -e "install.packages('kernlab')" && \
- R -e "install.packages('rpart')" && \
- R -e "install.packages('e1071')" && \
- R -e "install.packages('randomForest')" && \
- R -e "install.packages('pls')" && \
- R -e "install.packages('betareg')" && \
- R -e "install.packages('glmnet')" && \
- R -e "install.packages('leaps')" && \
- R -e "install.packages('mlogit')" && \
- R -e "install.packages('pROC')" && \
- R -e "install.packages('caret')" && \
- R -e "install.packages('stringi')" && \
- R -e "install.packages('SnowballC')" && \
- R -e "install.packages('magrittr')" && \
- R -e "install.packages('doSNOW')"
-
-RUN R -e "install.packages('prophet')"
- 
-RUN R -e "install.packages('getPass')"
+# RUN R CMD javareconf && R -e "install.packages('rJava')" && \
+# R -e "install.packages('DBI')" && \
+#  R -e "install.packages('odbc')" && \
+#  R -e "install.packages('h2o')" && \
+#  R -e "install.packages('ROCR')" && \
+#  R -e "install.packages('corrplot')" && \
+#  R -e "install.packages('dummies')" && \
+#  R -e "install.packages('xgboost')" && \
+#  R -e "install.packages('plotly')" && \
+#  R -e "install.packages('doParallel')" && \
+#  R -e "install.packages('jsonlite')" && \
+#  R -e "install.packages('forecast')" && \
+#  R -e "install.packages('tseries')" && \
+#  R -e "install.packages('trend')" && \
+#  R -e "install.packages('rvest')" && \
+#  R -e "install.packages('curl')" && \
+#  R -e "install.packages('Rcpp')" && \
+#  R -e "install.packages('ggplot2')" && \
+#  R -e "install.packages('rpart.plot')" && \
+#  R -e "install.packages('reshape2')" && \
+#  R -e "install.packages('shiny')" && \
+#  R -e "install.packages('markdown')" && \
+#  R -e "install.packages('shinydashboard')" && \
+#  R -e "install.packages('knitr')" && \
+#  R -e "install.packages('shinyjs')" && \
+#  R -e "install.packages('shinythemes')" && \
+#  R -e "install.packages('dtplyr')" && \
+#  R -e "install.packages('stringr')" && \
+#  R -e "install.packages('data.table')" && \
+#  R -e "install.packages('xlsx')" && \
+#  R -e "install.packages('readxl')" && \
+#  R -e "install.packages('readr')" && \
+#  R -e "install.packages('leaflet')" && \
+#  R -e "install.packages('RColorBrewer')" && \
+#  R -e "install.packages('colourpicker')" && \
+#  R -e "install.packages('scales')" && \
+#  R -e "install.packages('FactoMineR')" && \
+#  R -e "install.packages('kernlab')" && \
+#  R -e "install.packages('rpart')" && \
+#  R -e "install.packages('e1071')" && \
+#  R -e "install.packages('randomForest')" && \
+#  R -e "install.packages('pls')" && \
+#  R -e "install.packages('betareg')" && \
+#  R -e "install.packages('glmnet')" && \
+#  R -e "install.packages('leaps')" && \
+#  R -e "install.packages('mlogit')" && \
+#  R -e "install.packages('pROC')" && \
+#  R -e "install.packages('caret')" && \
+#  R -e "install.packages('stringi')" && \
+#  R -e "install.packages('SnowballC')" && \
+#  R -e "install.packages('magrittr')" && \
+#  R -e "install.packages('doSNOW')"
+# RUN R -e "install.packages('prophet')"
+# RUN R -e "install.packages('getPass')"
 
 RUN mkdir /root/.R/
 RUN echo CXXFLAGS=-DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION > /root/.R/Makevars
@@ -138,36 +136,36 @@ RUN chmod 500 /init_rstudio.sh
 # JAVA_HOME define
 ENV PATH=$JAVA_HOME/bin:$PATH
 
-# Hadoop client installation
-RUN wget --no-verbose http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.7.1.tar.gz \
-&& tar -xzf hadoop-2.6.0-cdh5.7.1.tar.gz \
-&& rm hadoop-2.6.0-cdh5.7.1.tar.gz \
-&& mv hadoop-2.6.0-cdh5.7.1 /usr/local/hadoop
-ENV HADOOP_HOME=/usr/local/hadoop
-ENV PATH=$PATH:$HADOOP_HOME/bin
+# # Hadoop client installation
+# RUN wget --no-verbose http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.7.1.tar.gz \
+# && tar -xzf hadoop-2.6.0-cdh5.7.1.tar.gz \
+# && rm hadoop-2.6.0-cdh5.7.1.tar.gz \
+# && mv hadoop-2.6.0-cdh5.7.1 /usr/local/hadoop
+# ENV HADOOP_HOME=/usr/local/hadoop
+# ENV PATH=$PATH:$HADOOP_HOME/bin
 
-# Hive client installation
-RUN wget --no-verbose http://apache.mirrors.ovh.net/ftp.apache.org/dist/hive/hive-1.2.2/apache-hive-1.2.2-bin.tar.gz \
-&& tar -xvzf apache-hive-1.2.2-bin.tar.gz \
-&& rm apache-hive-1.2.2-bin.tar.gz \
-&& cd apache-hive-1.2.2-bin
-ENV HIVE_HOME=/apache-hive-1.2.2-bin
-ENV PATH=$HIVE_HOME/bin:$PATH
+# # Hive client installation
+# RUN wget --no-verbose http://apache.mirrors.ovh.net/ftp.apache.org/dist/hive/hive-1.2.2/apache-hive-1.2.2-bin.tar.gz \
+# && tar -xvzf apache-hive-1.2.2-bin.tar.gz \
+# && rm apache-hive-1.2.2-bin.tar.gz \
+# && cd apache-hive-1.2.2-bin
+# ENV HIVE_HOME=/apache-hive-1.2.2-bin
+# ENV PATH=$HIVE_HOME/bin:$PATH
 
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update -qq && apt-get install -yqq --no-install-recommends \
-      krb5-user && \
-    rm -rf /var/lib/apt/lists/*;
+# ENV DEBIAN_FRONTEND noninteractive
+# RUN apt-get update -qq && apt-get install -yqq --no-install-recommends \
+#       krb5-user && \
+#     rm -rf /var/lib/apt/lists/*;
 
-# Install Hive ODBC driver
-RUN apt-get update -qq && apt-get install -yqq --no-install-recommends \
-      libsasl2-modules-gssapi-mit && \
-    rm -rf /var/lib/apt/lists/* && \
-    cd /tmp && \
-    wget --no-verbose https://downloads.cloudera.com/connectors/ClouderaHive_ODBC_2.6.4.1004/Debian/clouderahiveodbc_2.6.4.1004-2_amd64.deb && \
-    dpkg -i clouderahiveodbc_2.6.4.1004-2_amd64.deb && \
-    odbcinst -i -d -f /opt/cloudera/hiveodbc/Setup/odbcinst.ini && \
-    rm /tmp/clouderahiveodbc_2.6.4.1004-2_amd64.deb
+# # Install Hive ODBC driver
+# RUN apt-get update -qq && apt-get install -yqq --no-install-recommends \
+#       libsasl2-modules-gssapi-mit && \
+#     rm -rf /var/lib/apt/lists/* && \
+#     cd /tmp && \
+#     wget --no-verbose https://downloads.cloudera.com/connectors/ClouderaHive_ODBC_2.6.4.1004/Debian/clouderahiveodbc_2.6.4.1004-2_amd64.deb && \
+#     dpkg -i clouderahiveodbc_2.6.4.1004-2_amd64.deb && \
+#     odbcinst -i -d -f /opt/cloudera/hiveodbc/Setup/odbcinst.ini && \
+#     rm /tmp/clouderahiveodbc_2.6.4.1004-2_amd64.deb
 
 # Store Root envvar to be able to exclude it at runtime when propagating envvars to every user
 RUN env >> /ROOT_ENV_VAR && chmod 400 /ROOT_ENV_VAR
