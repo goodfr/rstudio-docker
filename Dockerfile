@@ -174,7 +174,7 @@ RUN R CMD javareconf && R -e "install.packages('rJava')"
 
 RUN mkdir /root/.R/
 RUN echo CXXFLAGS=-DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION > /root/.R/Makevars
-RUN R -e "install.packages('prophet')"
+# RUN R -e "install.packages('prophet')"
 
 # Be sure rstudio user has full access to his home directory
 RUN mkdir -p /home/rstudio && \
