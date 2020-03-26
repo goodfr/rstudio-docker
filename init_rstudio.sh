@@ -46,8 +46,8 @@ mkdir -p /home/rstudio
 chown -R rstudio:qwerty /home/rstudio
 chmod -R 755 /home/rstudio
 
-# test to change rstudio password
-passwd rstudio qwerty
+# test to change rstudio password >>> does not work
+# passwd rstudio qwerty
 
 # create an admin user who will be able to create new users directly from RStudio IDE
 useradd admin --home /home/admin --create-home -p $(openssl passwd -1 rstudioadmin) --groups sudo,shadow,rstudio,staff

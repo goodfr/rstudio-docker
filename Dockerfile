@@ -178,7 +178,7 @@ RUN echo CXXFLAGS=-DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION > /root/.R/Makevars
 
 # Be sure rstudio user has full access to his home directory
 RUN mkdir -p /home/rstudio && \
-  chown -R rstudio:rstudio /home/rstudio && \
+  chown -R rstudio:qwerty /home/rstudio && \
   chmod -R 755 /home/rstudio
 
 # RUN passwd rstudio qwerty
