@@ -181,7 +181,7 @@ RUN mkdir -p /home/rstudio && \
   chown -R rstudio:rstudio /home/rstudio && \
   chmod -R 755 /home/rstudio
 
-RUN passwd rstudio qwerty
+# RUN passwd rstudio qwerty
 
 ADD ./init_rstudio.sh /
 RUN chmod 500 /init_rstudio.sh

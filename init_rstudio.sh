@@ -43,7 +43,7 @@ echo "Init users"
 
 # We need to make rstudio user the owner of his own home directory as it will be owned by root if we mount a docker volume to /home (weird but true...)
 mkdir -p /home/rstudio
-chown -R rstudio:rstudio /home/rstudio
+chown -R rstudio:qwerty /home/rstudio
 chmod -R 755 /home/rstudio
 
 # test to change rstudio password
